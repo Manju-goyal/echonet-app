@@ -12,7 +12,7 @@ st.title("💓 Heart EF Prediction App")
 def load_my_model():
     if not os.path.exists("my_model.h5"):
         st.write("Downloading model... ⏳")
-        url = "https://drive.google.com/uc?id=1wyUhTvWsos6YQJ69bv2kQNlS3nueACvN"
+        url = "https://drive.google.com/file/d/1wyUhTvWsos6YQJ69bv2kQNlS3nueACvN/view?usp=sharing"
         gdown.download(url, "my_model.h5", quiet=False)
 
     st.write("Loading real model... 🤖")
