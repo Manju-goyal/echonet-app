@@ -16,8 +16,26 @@ def load_my_model():
         gdown.download(url, "my_model.h5", quiet=False)
 
     st.write("Loading real model... 🤖")
-    model = load_model("my_model.h5",compile=False)
+
+    try:
+        from tensorflow.keras.layers import InputLayer
+
+        custom_objects = {
+            "InputLayer": InputLayer
+        }
+
+        model = load_model(
+            "my_model.h5",
+            compile=False,
+            custom_objects=custom_objects
+        )
+
+    except Exception as e:
+        st.error("❌ Model load error: " + str(e))
+        return None
+
     return model
+
 
 model = load_my_model()
 
@@ -44,6 +62,7 @@ def load_video(path, max_frames=16):
 
     return np.array(frames)
 
+
 # 📂 Upload UI
 uploaded_file = st.file_uploader("Upload Echo Video", type=["mp4", "avi"])
 
@@ -57,11 +76,15 @@ if uploaded_file:
 
     if frames is None:
         st.error("❌ Video read nahi hua")
+    elif model is None:
+        st.error("❌ Model load nahi hua")
     else:
         frames = np.expand_dims(frames, axis=0)
 
         st.write("Predicting... 🤖")
 
-        prediction = model.predict(frames)[0][0]
-
-        st.success(f"💓 Predicted EF: {prediction:.2f}")
+        try:
+            prediction = model.predict(frames)[0][0]
+            st.success(f"💓 Predicted EF: {prediction:.2f}")
+        except Exception as e:
+            st.error("❌ Prediction error: " + str(e))
