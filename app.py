@@ -9,16 +9,16 @@ st.title("💓 Heart EF Prediction App")
 
 # 🔥 Load model safely
 @st.cache_resource
-    def load_my_model():
-        if not os.path.exists("my_model.h5"):
-            st.write("Downloading model... ⏳")
-            url = "https://drive.google.com/uc?id=1wyUhTvWsos6YQJ69bv2kQNlS3nueACvN"
-            gdown.download(url, "my_model.h5", quiet=False, fuzzy=True)
-    
-        st.write("Loading real model... 🤖")
-    
-        try:
-            from tensorflow.keras.layers import InputLayer
+def load_my_model():
+    if not os.path.exists("my_model.h5"):
+        st.write("Downloading model... ⏳")
+        url = "https://drive.google.com/uc?id=1wyUhTvWsos6YQJ69bv2kQNlS3nueACvN"
+        gdown.download(url, "my_model.h5", quiet=False, fuzzy=True)
+
+    st.write("Loading real model... 🤖")
+
+    try:
+        from tensorflow.keras.layers import InputLayer
 
         custom_objects = {
             "InputLayer": InputLayer
