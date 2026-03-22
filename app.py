@@ -16,7 +16,7 @@ def load_my_model():
         gdown.download(url, "model.keras", quiet=False)
 
     st.write("Loading real model... 🤖")
-    model = load_model("model.keras")
+    model = load_model("model.keras",compile=False)
     return model
 
 model = load_my_model()
